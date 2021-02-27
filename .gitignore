@@ -1,3 +1,5 @@
+# Temp folder
+tmp/*
 # Django #
 *.log
 *.pot
@@ -9,6 +11,7 @@ media
 # Django configs and secrets #
 secrets.py
 mysql.conf
+mysql.cnf
 
 # Backup files # 
 *.bak 

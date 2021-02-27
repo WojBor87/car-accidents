@@ -1,3 +1,3 @@
-import django
+import django, os
 
-print(django.get_version())
+print(os.environ.get('DJANGO_SECRET_KEY'))

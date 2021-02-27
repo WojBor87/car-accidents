@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db import connection
 
+
 # Create your views here.
 def home(request):
     db_name = connection.settings_dict['NAME']
