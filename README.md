@@ -8,13 +8,13 @@
 # <a name="team-members"></a> Team Members
 |Name|Email|     
 |----|-----|   
-|Krzysztof|krzysiek@email.com|
-|Wojtek|wojtek@email.com|
-|Michał|michal.malek1@gmail.com|
+|Krzysztof|krzysiek@email(dot)com|
+|Wojtek|wojtek@email(dot)com|
+|Michał|michal.malek1@gmail(dot)com|
 
 # License
 The MIT License (MIT)
-Copyright © 2021 <Wojtek> 
+Copyright © 2021 <> 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated <br /> 
 documentation files (the “Software”), to deal in the Software without restriction, including without limitation the <br />
