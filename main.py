@@ -1,3 +1,5 @@
-import django, os
+import pandas as pd
 
-print(os.environ.get('DJANGO_SECRET_KEY'))
+df = pd.read_csv('tmp/all.csv')
+
+df.to_excel('tmp/all.xlsx')
