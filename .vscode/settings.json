@@ -3,7 +3,7 @@
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": [
-    "--max-line-length=120"
+    "--max-line-length=119"
     //  "--ignore=E402, F841, F401, E302, E305",
   ],
   "editor.insertSpaces": true,
@@ -14,8 +14,8 @@
     "editor.tabSize": 4,
     "editor.defaultFormatter": null
   },
-  "python.formatting.blackArgs": ["--line-length", "120", "--skip-string-normalization"],
+  "python.formatting.blackArgs": ["--line-length", "119", "--skip-string-normalization"],
   "python.formatting.provider": "black",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.printWidth": 120
+  "prettier.printWidth": 119
 }

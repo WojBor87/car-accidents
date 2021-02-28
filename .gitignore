@@ -1,5 +1,9 @@
 # Temp folder
 tmp/*
+
+# Bootstrap files in frontend/css/ and frontend/js/ folders#
+bootstrap*.*
+
 # Django #
 *.log
 *.pot
