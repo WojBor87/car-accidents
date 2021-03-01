@@ -51,4 +51,4 @@ class TypeOfAccident(models.Model):
 
 
 class TypeOfInjury(models.Model):
-    pass
+    name = models.CharField(max_length=255)
