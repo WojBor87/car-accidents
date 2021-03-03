@@ -9,7 +9,7 @@
 |Name|Email|     
 |----|-----|   
 |Krzysztof|krzysiek@email(dot)com|
-|Wojtek|wojtek@email(dot)com|
+|Wojtek|borawski.w@gmail(dot)com|
 |Michał|michal.malek1@gmail(dot)com|
 
 # License
