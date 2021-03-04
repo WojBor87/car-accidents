@@ -47,7 +47,7 @@ class Area(models.Model):
 
 
 class TypeOfAccident(models.Model):
-    pass
+    name
 
 
 class TypeOfInjury(models.Model):
