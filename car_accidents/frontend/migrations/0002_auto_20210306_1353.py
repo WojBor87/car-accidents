@@ -35,7 +35,4 @@ class Migration(migrations.Migration):
             name='location_id',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='frontend.town'),
         ),
-        migrations.DeleteModel(
-            name='Location',
-        ),
     ]
