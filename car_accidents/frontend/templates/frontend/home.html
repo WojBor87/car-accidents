@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} {% load bootstrap4 %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -12,7 +12,7 @@
     {% include 'frontend/favicons.html' %}
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="{% static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet" />
+    {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}" />
   </head>
   <body>
@@ -69,7 +69,7 @@
       </div>
       <button type="submit" class="btn btn-primary">Sign in</button>
     </form>
-    <script src="{% static 'frontend/js/bootstrap.bundle.min.js' %}"></script>
+    {% bootstrap_javascript jquery='full' %}
     <script src="{% static 'frontend/js/scripts.js' %}" async defer></script>
   </body>
 </html>
