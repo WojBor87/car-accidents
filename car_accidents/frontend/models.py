@@ -50,6 +50,18 @@ class WeatherConditions(models.Model):
     name = models.CharField(max_length=50)
 
 
+class PedestrianBehavior(models.Model):
+    name = models.CharField(max_length=50)
+
+
+class DriverBehavior(models.Model):
+    name = models.CharField(max_length=50)
+
+
+class Notes(models.Model):
+    name = models.CharField(max_length=255)
+
+
 class Accident(models.Model):
     data_time = models.DateTimeField()
     location_id = models.ForeignKey(Town, on_delete=models.CASCADE)
@@ -67,3 +79,6 @@ class Accident(models.Model):
     num_of_injured = models.IntegerField()
     type_of_injury_id = models.ForeignKey(TypeOfInjury, on_delete=models.CASCADE)
     is_offender_intoxicated = models.BooleanField()
+    driver_behavior = models.ForeignKey(DriverBehavior, on_delete=models.CASCADE)
+    pedestrian_behavior = models.ForeignKey(PedestrianBehavior, on_delete=models.CASCADE)
+    notes = models.ForeignKey(Notes, on_delete=models.CASCADE)
