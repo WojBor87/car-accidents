@@ -64,7 +64,7 @@ class Notes(models.Model):
 
 class Accident(models.Model):
     data_time = models.DateTimeField()
-    location_id = models.ForeignKey(Town, on_delete=models.CASCADE)
+    town_name = models.ForeignKey(Town, on_delete=models.CASCADE)
     road_id = models.ForeignKey(Road, on_delete=models.CASCADE)
     is_built_up_area = models.BooleanField()
     longitude = models.FloatField()
