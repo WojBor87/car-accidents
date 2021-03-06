@@ -20,10 +20,10 @@ class District(models.Model):
     voivodeship_id = models.ForeignKey(Voivodeship, on_delete=models.CASCADE)
 
 
-class Location(models.Model):
+class Town(models.Model):
     name = models.CharField(max_length=35)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE)
-    is_city = models.SmallIntegerField()
+    is_city = models.BooleanField()
 
 
 class RoadGeometry(models.Model):
@@ -52,9 +52,9 @@ class WeatherConditions(models.Model):
 
 class Accident(models.Model):
     data_time = models.DateTimeField()
-    location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location_id = models.ForeignKey(Town, on_delete=models.CASCADE)
     road_id = models.ForeignKey(Road, on_delete=models.CASCADE)
-    is_built_up_area = models.SmallIntegerField()
+    is_built_up_area = models.BooleanField()
     longitude = models.FloatField()
     latitude = models.FloatField()
     road_geometry_id = models.ForeignKey(RoadGeometry, on_delete=models.CASCADE)
@@ -66,4 +66,4 @@ class Accident(models.Model):
     num_of_fatalities = models.IntegerField()
     num_of_injured = models.IntegerField()
     type_of_injury_id = models.ForeignKey(TypeOfInjury, on_delete=models.CASCADE)
-    is_offender_intoxicated = models.SmallIntegerField()
+    is_offender_intoxicated = models.BooleanField()
