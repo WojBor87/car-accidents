@@ -6,5 +6,5 @@ from . import views
 app_name = 'frontend'
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.filters_form, name='filters_form'),
 ]
