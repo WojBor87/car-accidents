@@ -1,6 +1,8 @@
 # Temp folder
 tmp/*
 
+# CSVs to import
+**/csv/*
 # Bootstrap files in frontend/css/ and frontend/js/ folders#
 bootstrap*.*
 
