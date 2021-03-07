@@ -7,8 +7,15 @@ class RoadCategory(models.Model):
 
 
 class Road(models.Model):
-    name = models.CharField(max_length=15, verbose_name="Road name")
-    road_category_id = models.ForeignKey(RoadCategory, on_delete=models.CASCADE, verbose_name="Road road_category_id")
+    name = models.CharField(max_length=15, verbose_name="Road name", primary_key=True)
+    road_category_id = models.ForeignKey(
+        RoadCategory,
+        on_delete=models.CASCADE,
+        verbose_name="Road road_category_id",
+        blank=True,
+        null=True,
+        default=None,
+    )
 
 
 class Voivodeship(models.Model):
@@ -17,7 +24,15 @@ class Voivodeship(models.Model):
 
 class District(models.Model):
     name = models.CharField(max_length=15, verbose_name="District name")
-    voivodeship_id = models.ForeignKey(Voivodeship, on_delete=models.CASCADE, verbose_name="District voivodeship_id")
+    # todo: should be not nullable. find out based on longitude and latitude or district
+    voivodeship_id = models.ForeignKey(
+        Voivodeship,
+        on_delete=models.CASCADE,
+        verbose_name="District voivodeship_id",
+        blank=True,
+        null=True,
+        default=None,
+    )
 
 
 class Town(models.Model):
@@ -27,7 +42,7 @@ class Town(models.Model):
 
 
 class RoadGeometry(models.Model):
-    name = models.IntegerField(verbose_name="RoadGeometry name")
+    name = models.CharField(max_length=35, verbose_name="RoadGeometry name")
 
 
 class PlaceOfTheEvent(models.Model):
@@ -51,11 +66,11 @@ class WeatherConditions(models.Model):
 
 
 class PedestrianBehavior(models.Model):
-    name = models.CharField(max_length=50, verbose_name="PedestrianBehavior name")
+    name = models.CharField(max_length=150, verbose_name="PedestrianBehavior name")
 
 
 class DriverBehavior(models.Model):
-    name = models.CharField(max_length=50, verbose_name="DriverBehavior name")
+    name = models.CharField(max_length=100, verbose_name="DriverBehavior name")
 
 
 class Notes(models.Model):
@@ -63,17 +78,25 @@ class Notes(models.Model):
 
 
 class Accident(models.Model):
+    idksip = models.CharField(max_length=15, primary_key=True, verbose_name="Accident unique idksip key")
     data_time = models.DateTimeField(verbose_name="Accident data_time")
     town_name = models.ForeignKey(Town, on_delete=models.CASCADE, verbose_name="Accident town_name")
-    road = models.ForeignKey(Road, on_delete=models.CASCADE, verbose_name="Accident road")
+    road = models.ForeignKey(
+        Road, on_delete=models.CASCADE, verbose_name="Accident road", blank=True, null=True, default=None
+    )
     is_built_up_area = models.BooleanField(verbose_name="Accident is_built_up_area")
     longitude = models.FloatField(verbose_name="Accident longitude")
     latitude = models.FloatField(verbose_name="Accident latitude")
     road_geometry = models.ForeignKey(
-        RoadGeometry, on_delete=models.CASCADE, verbose_name="Accident road_geometry"
+        RoadGeometry,
+        on_delete=models.CASCADE,
+        verbose_name="Accident road_geometry",
+        blank=True,
+        null=True,
+        default=None,
     )
     place_of_the_event = models.ForeignKey(
-        PlaceOfTheEvent, on_delete=models.CASCADE, verbose_name="Accident place_of_the_event"
+        PlaceOfTheEvent, on_delete=models.CASCADE, verbose_name="Accident char_place_of_the_event"
     )
     weather_conditions = models.ForeignKey(
         WeatherConditions, on_delete=models.CASCADE, verbose_name="Accident weather_conditions"
@@ -86,13 +109,30 @@ class Accident(models.Model):
     num_of_fatalities = models.IntegerField(verbose_name="Accident num_of_fatalities")
     num_of_injured = models.IntegerField(verbose_name="Accident num_of_injured")
     type_of_injury = models.ForeignKey(
-        TypeOfInjury, on_delete=models.CASCADE, verbose_name="Accident type_of_injury"
+        TypeOfInjury,
+        on_delete=models.CASCADE,
+        verbose_name="Accident type_of_injury",
+        blank=True,
+        null=True,
+        default=None,
     )
     is_offender_intoxicated = models.BooleanField(verbose_name="Accident is_offender_intoxicated")
     driver_behavior = models.ForeignKey(
-        DriverBehavior, on_delete=models.CASCADE, verbose_name="Accident driver_behavior"
+        DriverBehavior,
+        on_delete=models.CASCADE,
+        verbose_name="Accident driver_behavior",
+        blank=True,
+        null=True,
+        default=None,
     )
     pedestrian_behavior = models.ForeignKey(
-        PedestrianBehavior, on_delete=models.CASCADE, verbose_name="Accident pedestrian_behavior"
+        PedestrianBehavior,
+        on_delete=models.CASCADE,
+        verbose_name="Accident pedestrian_behavior",
+        blank=True,
+        null=True,
+        default=None,
     )
-    notes = models.ForeignKey(Notes, on_delete=models.CASCADE, verbose_name="Accident notes")
+    notes = models.ForeignKey(
+        Notes, on_delete=models.CASCADE, verbose_name="Accident notes", blank=True, null=True, default=None
+    )
