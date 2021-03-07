@@ -1,5 +1,5 @@
 from django.urls import path
-from frontend.model_table_views import (
+from .model_table_views import (
     RoadCategoryListView,
     RoadListView,
     VoivodeshipListView,
