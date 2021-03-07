@@ -63,27 +63,6 @@ class Notes(models.Model):
 
 
 class Accident(models.Model):
-<<<<<<< Updated upstream
-    data_time = models.DateTimeField()
-    town_name = models.ForeignKey(Town, on_delete=models.CASCADE)
-    road_id = models.ForeignKey(Road, on_delete=models.CASCADE)
-    is_built_up_area = models.BooleanField()
-    longitude = models.FloatField()
-    latitude = models.FloatField()
-    road_geometry_id = models.ForeignKey(RoadGeometry, on_delete=models.CASCADE)
-    place_of_the_event_id = models.ForeignKey(PlaceOfTheEvent, on_delete=models.CASCADE)
-    weather_conditions_id = models.ForeignKey(WeatherConditions, on_delete=models.CASCADE)
-    lighting_id = models.ForeignKey(Lighting, on_delete=models.CASCADE)
-    type_of_accident_id = models.ForeignKey(TypeOfAccident, on_delete=models.CASCADE)
-    num_of_accidents = models.IntegerField()
-    num_of_fatalities = models.IntegerField()
-    num_of_injured = models.IntegerField()
-    type_of_injury_id = models.ForeignKey(TypeOfInjury, on_delete=models.CASCADE)
-    is_offender_intoxicated = models.BooleanField()
-    driver_behavior = models.ForeignKey(DriverBehavior, on_delete=models.CASCADE)
-    pedestrian_behavior = models.ForeignKey(PedestrianBehavior, on_delete=models.CASCADE)
-    notes = models.ForeignKey(Notes, on_delete=models.CASCADE)
-=======
     data_time = models.DateTimeField(verbose_name="Accident data_time")
     town_name = models.ForeignKey(Town, on_delete=models.CASCADE, verbose_name="Accident town_name")
     road_id = models.ForeignKey(Road, on_delete=models.CASCADE, verbose_name="Accident road_id")
@@ -117,4 +96,3 @@ class Accident(models.Model):
         PedestrianBehavior, on_delete=models.CASCADE, verbose_name="Accident pedestrian_behavior"
     )
     notes = models.ForeignKey(Notes, on_delete=models.CASCADE, verbose_name="Accident notes")
->>>>>>> Stashed changes
