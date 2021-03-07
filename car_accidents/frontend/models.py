@@ -65,28 +65,28 @@ class Notes(models.Model):
 class Accident(models.Model):
     data_time = models.DateTimeField(verbose_name="Accident data_time")
     town_name = models.ForeignKey(Town, on_delete=models.CASCADE, verbose_name="Accident town_name")
-    road_id = models.ForeignKey(Road, on_delete=models.CASCADE, verbose_name="Accident road_id")
+    road = models.ForeignKey(Road, on_delete=models.CASCADE, verbose_name="Accident road")
     is_built_up_area = models.BooleanField(verbose_name="Accident is_built_up_area")
     longitude = models.FloatField(verbose_name="Accident longitude")
     latitude = models.FloatField(verbose_name="Accident latitude")
-    road_geometry_id = models.ForeignKey(
-        RoadGeometry, on_delete=models.CASCADE, verbose_name="Accident road_geometry_id"
+    road_geometry = models.ForeignKey(
+        RoadGeometry, on_delete=models.CASCADE, verbose_name="Accident road_geometry"
     )
-    place_of_the_event_id = models.ForeignKey(
-        PlaceOfTheEvent, on_delete=models.CASCADE, verbose_name="Accident place_of_the_event_id"
+    place_of_the_event = models.ForeignKey(
+        PlaceOfTheEvent, on_delete=models.CASCADE, verbose_name="Accident place_of_the_event"
     )
-    weather_conditions_id = models.ForeignKey(
-        WeatherConditions, on_delete=models.CASCADE, verbose_name="Accident weather_conditions_id"
+    weather_conditions = models.ForeignKey(
+        WeatherConditions, on_delete=models.CASCADE, verbose_name="Accident weather_conditions"
     )
-    lighting_id = models.ForeignKey(Lighting, on_delete=models.CASCADE, verbose_name="Accident lighting_id")
-    type_of_accident_id = models.ForeignKey(
-        TypeOfAccident, on_delete=models.CASCADE, verbose_name="Accident type_of_accident_id"
+    lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, verbose_name="Accident lighting")
+    type_of_accident = models.ForeignKey(
+        TypeOfAccident, on_delete=models.CASCADE, verbose_name="Accident type_of_accident"
     )
     num_of_accidents = models.IntegerField(verbose_name="Accident num_of_accidents")
     num_of_fatalities = models.IntegerField(verbose_name="Accident num_of_fatalities")
     num_of_injured = models.IntegerField(verbose_name="Accident num_of_injured")
-    type_of_injury_id = models.ForeignKey(
-        TypeOfInjury, on_delete=models.CASCADE, verbose_name="Accident type_of_injury_id"
+    type_of_injury = models.ForeignKey(
+        TypeOfInjury, on_delete=models.CASCADE, verbose_name="Accident type_of_injury"
     )
     is_offender_intoxicated = models.BooleanField(verbose_name="Accident is_offender_intoxicated")
     driver_behavior = models.ForeignKey(

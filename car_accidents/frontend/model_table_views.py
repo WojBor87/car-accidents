@@ -1,5 +1,5 @@
 from django_tables2 import SingleTableView
-from frontend.models import (
+from .models import (
     RoadCategory,
     Road,
     Voivodeship,
@@ -16,7 +16,7 @@ from frontend.models import (
     Notes,
     Accident,
 )
-from frontend.tables import (
+from .tables import (
     RoadCategoryTable,
     RoadTable,
     VoivodeshipTable,

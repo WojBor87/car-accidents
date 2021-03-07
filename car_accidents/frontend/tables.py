@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from frontend.models import (
+from .models import (
     RoadCategory,
     Road,
     Voivodeship,
