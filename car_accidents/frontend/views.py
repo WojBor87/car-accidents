@@ -221,14 +221,17 @@ class ImportCsvView(View):
                 accident_field.save()
 
 
-# class AccidentView(ListView):
-#
-#     model = Accident
-#     paginate_by = 100
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         return context
+
+
+class AccidentView(ListView):
+
+    model = Accident
+    template_name = "frontend/accident_view.html"
+    paginate_by = 100
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
     #
     # data_names = {

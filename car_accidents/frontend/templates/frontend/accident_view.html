@@ -1,0 +1,56 @@
+{% extends 'frontend/base.html' %} {% load crispy_forms_tags %} {% block content %}
+<h1>Accidents</h1>
+    {% if object_list %}
+        <table id="accident" style="border-collapse: separate;" cellpadding="5">
+                <tr>
+                    <th>IDKSIP</th>
+                    <th>Date / Time</th>
+                    <th>Road</th>
+                    <th>Town</th>
+                    <th>Place Of The Event</th>
+                    <th>Type Of Injury</th>
+                    <th>Type Of Accident</th>
+                    <th>Lighting</th>
+                    <th>Weather Conditions</th>
+                    <th>Pedestrian Behavior</th>
+                    <th>Driver Behavior</th>
+                    <th>Notes</th>
+                </tr>
+             {% for accident in object_list %}
+                <tr>
+                    <td>{{ accident.idksip }}</td>
+                    <td>{{ accident.data_time }}</td>
+                    <td>{{ accident.road }}</td>
+                    <td>{{ accident.town_name }}</td>
+                    <td>{{ accident.char_place_of_the_event }}</td>
+                    <td>{{ accident.type_of_accident }}</td>
+                    <td>{{ accident.type_of_injury }}</td>
+                    <td>{{ accident.lighting }}</td>
+                    <td>{{ accident.weather_conditions }}</td>
+                    <td>{{ accident.pedestrian_behavior }}</td>
+                    <td>{{ accident.driver_behavior }}</td>
+                    <td>{{ accident.notes }}</td>
+                </tr>
+            {% empty %}
+                <li>No accidents in database yet.</li>
+            {% endfor %}
+        </table>
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="/cars?page={{ page_obj.previous_page_number }}">previous page</a>
+                    {% endif %}
+                    <span class="page-current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="/cars?page={{ page_obj.next_page_number }}">next page</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% else %}
+        <li>No accidents in database yet.</li>
+    {% endif %}
+{% endblock content %}
