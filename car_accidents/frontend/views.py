@@ -1,17 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import View
 from django.db import connection
-from django.utils.dateparse import parse_datetime
 from django.utils import timezone
 from datetime import datetime
-import pytz
 import pandas as pd
 import numpy as np
 from pathlib import Path
 from .models import (
     RoadCategory,
     Road,
-    Voivodeship,
     District,
     Town,
     RoadGeometry,
@@ -27,6 +24,28 @@ from .models import (
 )
 
 
+def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+    """
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    print(f'\r{120*" "}\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
+    # Print New Line on Complete
+    if iteration == total:
+        print(flush=True)
+
+
 # Create your views here.
 def filters_form(request):
     db_name = connection.settings_dict['NAME']
@@ -38,6 +57,7 @@ class ImportCsvView(View):
         pd.set_option('display.max_columns', None)
         self.df = pd.read_csv('frontend/static/frontend/csv' / Path(file_name))
         self.updated_and_created_rows = [0, 0]
+        self.df = self.df[self.df['IDKSIP'].str.startswith('EWK-')]
         self.process_behavior() if 'driver behavior' in self.df else self.process_all()
         self.insert_or_replace_behavior() if 'driver behavior' in self.df else self.insert_or_replace_all()
 
@@ -47,9 +67,10 @@ class ImportCsvView(View):
         # drop shifted data TODO: clear it so those rows can be used
         self.df['Longitude'] = self.df['Longitude'].astype(str)
         self.df.query(
-            'not(district == ["T", "N"] or district_commune.str.contains("POWIAT") or is_offender_intoxicated != ["T", "N"] or Longitude.str.contains("1\.1900"))',
+            'not(district == ["T", "N"] or district_commune.str.contains("POWIAT") or is_offender_intoxicated != ["T", "N"] or Longitude.str.contains("1\.1900") or Longitude.str.contains("#"))',
             inplace=True,
         )
+        self.df['hour'].apply(int)
         self.df['road_category'].replace('Nieokreślone (puste pole)', np.nan, inplace=True)
         self.df['road_number'].replace('0', np.nan, inplace=True)
         self.df['district'] = self.df['district'].str.replace('POWIAT ', '')
@@ -74,8 +95,12 @@ class ImportCsvView(View):
         self.df['other'].replace('', np.nan, inplace=True)
 
     def insert_or_replace_all(self):
+        printProgressBar(0, len(self.df), prefix=f'{self.df.count()} items, Progress: ', suffix='processed', length=50)
         for i, *fields in self.df.itertuples():
             fields_dict = dict(zip(self.df.columns, fields))
+            printProgressBar(
+                i + 1, len(self.df), prefix=f'{len(self.df)} items, Progress: ', suffix='processed', length=50
+            )
             RoadCategory_obj, if_created = RoadCategory.objects.update_or_create(
                 name=fields_dict['road_category'],
                 defaults={
@@ -160,8 +185,10 @@ class ImportCsvView(View):
             )
             self.updated_and_created_rows[if_created] += 1
 
-            datetime_of_accident = datetime.strptime(f"{fields_dict['date']} {fields_dict['hour']:02}", r'%Y-%m-%d %H')
-            datetime_of_accident = timezone.make_aware(datetime_of_accident, timezone.get_current_timezone())
+            datetime_of_accident = datetime.strptime(f"{fields_dict['date']} {fields_dict['hour']}", r'%Y-%m-%d %H')
+            datetime_of_accident = timezone.make_aware(
+                datetime_of_accident, timezone.get_current_timezone(), is_dst=True
+            )
 
             Accident_obj, if_created = Accident.objects.update_or_create(
                 idksip=fields_dict['IDKSIP'],
