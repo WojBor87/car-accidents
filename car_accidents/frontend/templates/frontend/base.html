@@ -16,6 +16,15 @@
     <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}" />
   </head>
   <body>
+
+    {% if user.is_authenticated %}
+      Witam {{ user.username }} <br>
+      <a href="{% url 'login' %}">Login</a>
+    {% else %}
+      <a href="{% url 'logout' %}">Logout</a>
+    {% endif %}
+
+    <hr>
     <!--[if lt IE 7]>
       <p class="browsehappy">
         You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View, ListView
 from django.db import connection
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from datetime import datetime
 import pandas as pd
 import numpy as np
@@ -23,7 +24,7 @@ from .models import (
     Accident,
 )
 
-
+@login_required
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
     """
     Call in a loop to create terminal progress bar
