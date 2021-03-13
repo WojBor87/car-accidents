@@ -1,4 +1,5 @@
-{% extends 'frontend/base.html' %} {% load crispy_forms_tags %} {% load widget_tweaks %} {% block content %}
+{% extends 'frontend/base.html' %} {% load crispy_forms_tags %} {% load widget_tweaks %}
+{% load my_templatetags %} {% block content %}
 <form method="get">
   <div class="well" style="margin: 2%">
     <h4 style="margin-top: 0">Filter accidents:</h4>
@@ -9,13 +10,16 @@
     </div>
     <div class="row">
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.data_time.label_tag }} {% render_field filter.form.data_time class="form-control" %}
+        {{ accident_filter.form.data_time.label_tag }}
+        {% render_field accident_filter.form.data_time class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.data_time__gte.label_tag }} {% render_field filter.form.data_time__gte class="form-control" %}
+        {{ accident_filter.form.data_time__gte.label_tag }}
+        {% render_field accident_filter.form.data_time__gte class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.data_time__lte.label_tag }} {% render_field filter.form.data_time__lte class="form-control" %}
+        {{ accident_filter.form.data_time__lte.label_tag }}
+        {% render_field accident_filter.form.data_time__lte class="form-control" %}
       </div>
     </div>
     <div class="row">
@@ -25,19 +29,23 @@
     </div>
     <div class="row">
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.town_name.label_tag }} {% render_field filter.form.town_name class="form-control" %}
+        {{ accident_filter.form.town_name.label_tag }}
+        {% render_field accident_filter.form.town_name class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.road.label_tag }} {% render_field filter.form.road class="form-control" %}
+        {{ accident_filter.form.road.label_tag }} {% render_field accident_filter.form.road class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.road_geometry.label_tag }} {% render_field filter.form.road_geometry class="form-control" %}
+        {{ accident_filter.form.road_geometry.label_tag }}
+        {% render_field accident_filter.form.road_geometry class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.place_of_the_event.label_tag }} {% render_field filter.form.place_of_the_event class="form-control" %}
+        {{ accident_filter.form.place_of_the_event.label_tag }}
+        {% render_field accident_filter.form.place_of_the_event class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.is_built_up_area.label_tag }} {% render_field filter.form.is_built_up_area class="form-control" %}
+        {{ accident_filter.form.is_built_up_area.label_tag }}
+        {% render_field accident_filter.form.is_built_up_area class="form-control" %}
       </div>
     </div>
     <div class="row">
@@ -47,10 +55,12 @@
     </div>
     <div class="row">
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.driver_behavior.label_tag }} {% render_field filter.form.driver_behavior class="form-control" %}
+        {{ accident_filter.form.driver_behavior.label_tag }}
+        {% render_field accident_filter.form.driver_behavior class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.pedestrian_behavior.label_tag }} {% render_field filter.form.pedestrian_behavior class="form-control" %}
+        {{ accident_filter.form.pedestrian_behavior.label_tag }}
+        {% render_field accident_filter.form.pedestrian_behavior class="form-control" %}
       </div>
     </div>
     <div class="row">
@@ -60,10 +70,12 @@
     </div>
     <div class="row">
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.lighting.label_tag }} {% render_field filter.form.lighting class="form-control" %}
+        {{ accident_filter.form.lighting.label_tag }}
+        {% render_field accident_filter.form.lighting class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.weather_conditions.label_tag }} {% render_field filter.form.weather_conditions class="form-control" %}
+        {{ accident_filter.form.weather_conditions.label_tag }}
+        {% render_field accident_filter.form.weather_conditions class="form-control" %}
       </div>
     </div>
     <div class="row">
@@ -73,22 +85,28 @@
     </div>
     <div class="row">
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.type_of_accident.label_tag }} {% render_field filter.form.type_of_accident class="form-control" %}
+        {{ accident_filter.form.type_of_accident.label_tag }}
+        {% render_field accident_filter.form.type_of_accident class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.type_of_injury.label_tag }} {% render_field filter.form.type_of_injury class="form-control" %}
+        {{ accident_filter.form.type_of_injury.label_tag }}
+        {% render_field accident_filter.form.type_of_injury class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.num_of_accidents.label_tag }} {% render_field filter.form.num_of_accidents class="form-control" %}
+        {{ accident_filter.form.num_of_accidents.label_tag }}
+        {% render_field accident_filter.form.num_of_accidents class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.num_of_fatalities.label_tag }} {% render_field filter.form.num_of_fatalities class="form-control" %}
+        {{ accident_filter.form.num_of_fatalities.label_tag }}
+        {% render_field accident_filter.form.num_of_fatalities class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.num_of_injured.label_tag }} {% render_field filter.form.num_of_injured class="form-control" %}
+        {{ accident_filter.form.num_of_injured.label_tag }}
+        {% render_field accident_filter.form.num_of_injured class="form-control" %}
       </div>
       <div class="form-group col-sm-4 col-md-2">
-        {{ filter.form.is_offender_intoxicated.label_tag }} {% render_field filter.form.is_offender_intoxicated class="form-control" %}
+        {{ accident_filter.form.is_offender_intoxicated.label_tag }}
+        {% render_field accident_filter.form.is_offender_intoxicated class="form-control" %}
       </div>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
@@ -100,12 +118,12 @@
   <thead>
     <tr align="center">
       <th>IDKSIP</th>
-      <th width="100em" >Date</th>
+      <th width="100em">Date</th>
       <th>Town</th>
       <th>Road</th>
       <th>Road geometry</th>
       <th>Place of the event</th>
-      <th width="80em" >is built-up area?</th>
+      <th width="80em">is built-up area?</th>
       <th>Driver behavior</th>
       <th>Pedestrian behavior</th>
       <th>Lighting</th>
@@ -119,7 +137,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for accident in filter.qs %}
+    {% for accident in dataqs.object_list %}
     <tr>
       <td align="center">{{ accident.idksip }}</td>
       <td align="center">{{ accident.data_time.date }}<br />{{ accident.data_time.time }}</td>
@@ -146,4 +164,21 @@
     {% endfor %}
   </tbody>
 </table>
+<div class="pagination">
+  <span>
+    {% if dataqs.has_previous %}
+    <a href="?{% query_transform request page=1 %}">&laquo; first</a>
+    <a href="?{% query_transform request page=dataqs.previous_page_number %}">previous</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ dataqs.number }} of {{ dataqs.paginator.num_pages }}.
+    </span>
+
+    {% if dataqs.has_next %}
+    <a href="?{% query_transform request page=dataqs.next_page_number %}">next</a>
+    <a href="?{% query_transform request page=dataqs.paginator.num_pages %}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
 {% endblock content %}
