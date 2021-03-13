@@ -6,6 +6,7 @@ class RoadCategory(models.Model):
     name = models.CharField(max_length=30, verbose_name="RoadCategory name")
 
 
+
 class Road(models.Model):
     name = models.CharField(max_length=15, verbose_name="Road name", primary_key=True)
     road_category_id = models.ForeignKey(
@@ -16,6 +17,7 @@ class Road(models.Model):
         null=True,
         default=None,
     )
+
 
 
 class Voivodeship(models.Model):
