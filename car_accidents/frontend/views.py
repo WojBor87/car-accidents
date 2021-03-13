@@ -8,6 +8,7 @@ from .filters import AccidentFilter
 import pandas as pd
 import numpy as np
 from pathlib import Path
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import (
     RoadCategory,
     Road,
@@ -266,6 +267,23 @@ class AccidentView(ListView):
 
 
 def filter_search(request):
-    accident_list = Accident.objects.all()
+    accident_list = Accident.objects.all().order_by('-data_time')
     accident_filter = AccidentFilter(request.GET, queryset=accident_list)
-    return render(request, 'frontend/accident_filter_view.html', {'filter': accident_filter})
+    paginator = Paginator(accident_filter.qs, 15)
+    page = request.GET.get('page')
+    try:
+        dataqs = paginator.page(page)
+    except PageNotAnInteger:
+        dataqs = paginator.page(1)
+    except EmptyPage:
+        dataqs = paginator.page(paginator.num_pages)
+
+    return render(
+        request,
+        'frontend/accident_filter_view.html',
+        {
+            'accident_list': accident_list,
+            'accident_filter': accident_filter,
+            'dataqs': dataqs,
+        },
+    )
