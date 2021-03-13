@@ -11,6 +11,7 @@ from pathlib import Path
 from .models import (
     RoadCategory,
     Road,
+    Voivodeship,
     District,
     Town,
     RoadGeometry,
@@ -24,28 +25,6 @@ from .models import (
     Notes,
     Accident,
 )
-
-
-def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
-    """
-    Call in a loop to create terminal progress bar
-    @params:
-        iteration   - Required  : current iteration (Int)
-        total       - Required  : total iterations (Int)
-        prefix      - Optional  : prefix string (Str)
-        suffix      - Optional  : suffix string (Str)
-        decimals    - Optional  : positive number of decimals in percent complete (Int)
-        length      - Optional  : character length of bar (Int)
-        fill        - Optional  : bar fill character (Str)
-        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
-    """
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print(f'\r{120*" "}\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
-    # Print New Line on Complete
-    if iteration == total:
-        print(flush=True)
 
 
 # Create your views here.
@@ -64,6 +43,29 @@ class ImportCsvView(View):
         self.insert_or_replace_behavior() if 'driver behavior' in self.df else self.insert_or_replace_all()
 
         return render(request, 'frontend/import_csv.html', {'updated_and_created_rows': self.updated_and_created_rows})
+
+    def printProgressBar(
+        self, iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"
+    ):
+        """
+        Call in a loop to create terminal progress bar
+        @params:
+            iteration   - Required  : current iteration (Int)
+            total       - Required  : total iterations (Int)
+            prefix      - Optional  : prefix string (Str)
+            suffix      - Optional  : suffix string (Str)
+            decimals    - Optional  : positive number of decimals in percent complete (Int)
+            length      - Optional  : character length of bar (Int)
+            fill        - Optional  : bar fill character (Str)
+            printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+        """
+        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+        filledLength = int(length * iteration // total)
+        bar = fill * filledLength + '-' * (length - filledLength)
+        print(f'\r{120*" "}\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
+        # Print New Line on Complete
+        if iteration == total:
+            print(flush=True)
 
     def process_all(self):
         # drop shifted data TODO: clear it so those rows can be used
@@ -97,10 +99,12 @@ class ImportCsvView(View):
         self.df['other'].replace('', np.nan, inplace=True)
 
     def insert_or_replace_all(self):
-        printProgressBar(0, len(self.df), prefix=f'{self.df.count()} items, Progress: ', suffix='processed', length=50)
+        self.printProgressBar(
+            0, len(self.df), prefix=f'{self.df.count()} items, Progress: ', suffix='processed', length=50
+        )
         for i, *fields in self.df.itertuples():
             fields_dict = dict(zip(self.df.columns, fields))
-            printProgressBar(
+            self.printProgressBar(
                 i + 1, len(self.df), prefix=f'{len(self.df)} items, Progress: ', suffix='processed', length=50
             )
             RoadCategory_obj, if_created = RoadCategory.objects.update_or_create(
@@ -264,8 +268,4 @@ class AccidentView(ListView):
 def filter_search(request):
     accident_list = Accident.objects.all()
     accident_filter = AccidentFilter(request.GET, queryset=accident_list)
-    return render(
-        request,
-        'frontend/accident_filter_view.html',
-        {'filter': accident_filter}
-    )
+    return render(request, 'frontend/accident_filter_view.html', {'filter': accident_filter})

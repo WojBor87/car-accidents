@@ -1,13 +1,117 @@
-{% extends 'frontend/base.html' %}
+{% extends 'frontend/base.html' %} {% load crispy_forms_tags %} {% load widget_tweaks %} {% block content %}
+<form method="get">
+  <div class="well">
+    <h4 style="margin-top: 0">Filter accidents:</h4>
+    <div class="row">
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.data_time.label_tag }} {% render_field filter.form.data_time class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.driver_behavior.label_tag }} {% render_field filter.form.driver_behavior class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.lighting.label_tag }} {% render_field filter.form.lighting class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.pedestrian_behavior.label_tag }} {% render_field filter.form.pedestrian_behavior
+        class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.place_of_the_event.label_tag }} {% render_field filter.form.place_of_the_event
+        class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.road.label_tag }} {% render_field filter.form.road class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.road_geometry.label_tag }} {% render_field filter.form.road_geometry class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.town_name.label_tag }} {% render_field filter.form.town_name class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.type_of_accident.label_tag }} {% render_field filter.form.type_of_accident class="form-control"
+        %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.type_of_injury.label_tag }} {% render_field filter.form.type_of_injury class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.weather_conditions.label_tag }} {% render_field filter.form.weather_conditions
+        class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.is_built_up_area.label_tag }} {% render_field filter.form.is_built_up_area class="form-control"
+        %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.num_of_accidents.label_tag }} {% render_field filter.form.num_of_accidents class="form-control"
+        %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.num_of_fatalities.label_tag }} {% render_field filter.form.num_of_fatalities
+        class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.num_of_injured.label_tag }} {% render_field filter.form.num_of_injured class="form-control" %}
+      </div>
+      <div class="form-group col-sm-4 col-md-3">
+        {{ filter.form.is_offender_intoxicated.label_tag }} {% render_field filter.form.is_offender_intoxicated
+        class="form-control" %}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+  </div>
+</form>
 
-{% block content %}
-  <form method="get">
-    {{ filter.form.as_p }}
-    <button type="submit">Filter</button>
-  </form>
-  <ul>
-  {% for accident in filter.qs %}
-    <li>{{ accident.idksip }} - {{ accident.data_time }}</li>
-  {% endfor %}
-  </ul>
-{% endblock %}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>idksip</th>
+      <th>data_time</th>
+      <th>town_name</th>
+      <th>driver_behavior</th>
+      <th>lighting</th>
+      <th>pedestrian_behavior</th>
+      <th>place_of_the_event</th>
+      <th>road</th>
+      <th>road_geometry</th>
+      <th>type_of_accident</th>
+      <th>type_of_injury</th>
+      <th>weather_conditions</th>
+      <th>is_built_up_area</th>
+      <th>num_of_accidents</th>
+      <th>num_of_fatalities</th>
+      <th>num_of_injured</th>
+      <th>is_offender_intoxicated</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for accident in filter.qs %}
+    <tr>
+      <td>{{ accident.idksip }}</td>
+      <td>{{ accident.data_time }}</td>
+      <td>{{ accident.town_name }}</td>
+      <td>{{ accident.driver_behavior }}</td>
+      <td>{{ accident.lighting }}</td>
+      <td>{{ accident.pedestrian_behavior }}</td>
+      <td>{{ accident.place_of_the_event }}</td>
+      <td>{{ accident.road }}</td>
+      <td>{{ accident.road_geometry }}</td>
+      <td>{{ accident.type_of_accident }}</td>
+      <td>{{ accident.type_of_injury }}</td>
+      <td>{{ accident.weather_conditions }}</td>
+      <td>{{ accident.is_built_up_area }}</td>
+      <td>{{ accident.num_of_accidents }}</td>
+      <td>{{ accident.num_of_fatalities }}</td>
+      <td>{{ accident.num_of_injured }}</td>
+      <td>{{ accident.is_offender_intoxicated }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5">No data</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
