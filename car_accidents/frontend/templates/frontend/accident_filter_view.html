@@ -1,0 +1,13 @@
+{% extends 'frontend/base.html' %}
+
+{% block content %}
+  <form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Filter</button>
+  </form>
+  <ul>
+  {% for user in filter.qs %}
+    <li>{{ accident.idksip }} - {{ accident.data_time }}</li>
+  {% endfor %}
+  </ul>
+{% endblock %}
