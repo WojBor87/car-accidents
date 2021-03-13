@@ -5,7 +5,8 @@ from django.db import models
 class RoadCategory(models.Model):
     name = models.CharField(max_length=30, verbose_name="RoadCategory name")
 
-
+    def __str__(self):
+        return self.name
 
 class Road(models.Model):
     name = models.CharField(max_length=15, verbose_name="Road name", primary_key=True)
@@ -18,11 +19,16 @@ class Road(models.Model):
         default=None,
     )
 
+    def __str__(self):
+        return self.name
+
 
 
 class Voivodeship(models.Model):
     name = models.CharField(max_length=20, verbose_name="Voivodeship name")
 
+    def __str__(self):
+        return self.name
 
 class District(models.Model):
     name = models.CharField(max_length=15, verbose_name="District name")
@@ -36,48 +42,70 @@ class District(models.Model):
         default=None,
     )
 
+    def __str__(self):
+        return self.name
 
 class Town(models.Model):
     name = models.CharField(max_length=35, verbose_name="Town name")
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, verbose_name="Town district_id")
     is_city = models.BooleanField(verbose_name="Town is_city")
 
+    def __str__(self):
+        return self.name
 
 class RoadGeometry(models.Model):
     name = models.CharField(max_length=35, verbose_name="RoadGeometry name")
 
+    def __str__(self):
+        return self.name
 
 class PlaceOfTheEvent(models.Model):
     name = models.CharField(max_length=70, verbose_name="PlaceOfTheEvent name")
 
+    def __str__(self):
+        return self.name
 
 class TypeOfInjury(models.Model):
     name = models.CharField(max_length=40, verbose_name="TypeOfInjury name")
 
+    def __str__(self):
+        return self.name
 
 class TypeOfAccident(models.Model):
     name = models.CharField(max_length=50, verbose_name="TypeOfAccident name")
 
+    def __str__(self):
+        return self.name
 
 class Lighting(models.Model):
     name = models.CharField(max_length=40, verbose_name="Lighting name")
 
+    def __str__(self):
+        return self.name
 
 class WeatherConditions(models.Model):
     name = models.CharField(max_length=50, verbose_name="WeatherConditions name")
 
+    def __str__(self):
+        return self.name
 
 class PedestrianBehavior(models.Model):
     name = models.CharField(max_length=150, verbose_name="PedestrianBehavior name")
 
+    def __str__(self):
+        return self.name
 
 class DriverBehavior(models.Model):
     name = models.CharField(max_length=100, verbose_name="DriverBehavior name")
 
+    def __str__(self):
+        return self.name
 
 class Notes(models.Model):
     name = models.CharField(max_length=255, verbose_name="Notes name")
 
+    def __str__(self):
+        return self.name
 
 class Accident(models.Model):
     idksip = models.CharField(max_length=15, primary_key=True, verbose_name="Accident unique idksip key")
@@ -138,3 +166,6 @@ class Accident(models.Model):
     notes = models.ForeignKey(
         Notes, on_delete=models.CASCADE, verbose_name="Accident notes", blank=True, null=True, default=None
     )
+
+    def __str__(self):
+        return self.name
