@@ -6,7 +6,7 @@
     <button type="submit">Filter</button>
   </form>
   <ul>
-  {% for user in filter.qs %}
+  {% for accident in filter.qs %}
     <li>{{ accident.idksip }} - {{ accident.data_time }}</li>
   {% endfor %}
   </ul>
