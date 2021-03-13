@@ -4,8 +4,8 @@ import django_filters
 
 class AccidentFilter(django_filters.FilterSet):
     data_time = django_filters.NumberFilter(field_name='data_time', lookup_expr='year')
-    data_time__gt = django_filters.NumberFilter(field_name='data_time', lookup_expr='year__gte')
-    data_time__lt = django_filters.NumberFilter(field_name='data_time', lookup_expr='year__lte')
+    data_time__gte = django_filters.NumberFilter(field_name='data_time', lookup_expr='year__gte')
+    data_time__lte = django_filters.NumberFilter(field_name='data_time', lookup_expr='year__lte')
 
     class Meta:
         model = Accident

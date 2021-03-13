@@ -109,48 +109,48 @@ class Notes(models.Model):
 
 class Accident(models.Model):
     idksip = models.CharField(max_length=15, primary_key=True, verbose_name="Accident unique idksip key")
-    data_time = models.DateTimeField(verbose_name="Accident data_time")
-    town_name = models.ForeignKey(Town, on_delete=models.CASCADE, verbose_name="Accident town_name")
+    data_time = models.DateTimeField(verbose_name="Date")
+    town_name = models.ForeignKey(Town, on_delete=models.CASCADE, verbose_name="Town")
     road = models.ForeignKey(
-        Road, on_delete=models.CASCADE, verbose_name="Accident road", blank=True, null=True, default=None
+        Road, on_delete=models.CASCADE, verbose_name="Road number", blank=True, null=True, default=None
     )
-    is_built_up_area = models.BooleanField(verbose_name="Accident is_built_up_area")
-    longitude = models.FloatField(verbose_name="Accident longitude")
-    latitude = models.FloatField(verbose_name="Accident latitude")
+    is_built_up_area = models.BooleanField(verbose_name="built-up area")
+    longitude = models.FloatField(verbose_name="Longitude")
+    latitude = models.FloatField(verbose_name="Latitude")
     road_geometry = models.ForeignKey(
         RoadGeometry,
         on_delete=models.CASCADE,
-        verbose_name="Accident road_geometry",
+        verbose_name="Road geometry",
         blank=True,
         null=True,
         default=None,
     )
     place_of_the_event = models.ForeignKey(
-        PlaceOfTheEvent, on_delete=models.CASCADE, verbose_name="Accident char_place_of_the_event"
+        PlaceOfTheEvent, on_delete=models.CASCADE, verbose_name="Place of the event"
     )
     weather_conditions = models.ForeignKey(
-        WeatherConditions, on_delete=models.CASCADE, verbose_name="Accident weather_conditions"
+        WeatherConditions, on_delete=models.CASCADE, verbose_name="Weather Conditions"
     )
-    lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, verbose_name="Accident lighting")
+    lighting = models.ForeignKey(Lighting, on_delete=models.CASCADE, verbose_name="Lighting")
     type_of_accident = models.ForeignKey(
-        TypeOfAccident, on_delete=models.CASCADE, verbose_name="Accident type_of_accident"
+        TypeOfAccident, on_delete=models.CASCADE, verbose_name="Type of accident"
     )
-    num_of_accidents = models.IntegerField(verbose_name="Accident num_of_accidents")
-    num_of_fatalities = models.IntegerField(verbose_name="Accident num_of_fatalities")
-    num_of_injured = models.IntegerField(verbose_name="Accident num_of_injured")
+    num_of_accidents = models.IntegerField(verbose_name="Number of accidents")
+    num_of_fatalities = models.IntegerField(verbose_name="Number of fatalities")
+    num_of_injured = models.IntegerField(verbose_name="Number of injured")
     type_of_injury = models.ForeignKey(
         TypeOfInjury,
         on_delete=models.CASCADE,
-        verbose_name="Accident type_of_injury",
+        verbose_name="Type of injury",
         blank=True,
         null=True,
         default=None,
     )
-    is_offender_intoxicated = models.BooleanField(verbose_name="Accident is_offender_intoxicated")
+    is_offender_intoxicated = models.BooleanField(verbose_name="Is offender intoxicated?")
     driver_behavior = models.ForeignKey(
         DriverBehavior,
         on_delete=models.CASCADE,
-        verbose_name="Accident driver_behavior",
+        verbose_name="Driver behavior",
         blank=True,
         null=True,
         default=None,
@@ -158,13 +158,13 @@ class Accident(models.Model):
     pedestrian_behavior = models.ForeignKey(
         PedestrianBehavior,
         on_delete=models.CASCADE,
-        verbose_name="Accident pedestrian_behavior",
+        verbose_name="Pedestrian behavior",
         blank=True,
         null=True,
         default=None,
     )
     notes = models.ForeignKey(
-        Notes, on_delete=models.CASCADE, verbose_name="Accident notes", blank=True, null=True, default=None
+        Notes, on_delete=models.CASCADE, verbose_name="Notes", blank=True, null=True, default=None
     )
 
     def __str__(self):
