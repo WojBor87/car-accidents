@@ -5,7 +5,7 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = (
-    [path('admin/', admin.site.urls)]
+    [path('admin/', admin.site.urls, name="admin")]
     + favicon_patterns
     + [
         path('', include('frontend.urls')),
