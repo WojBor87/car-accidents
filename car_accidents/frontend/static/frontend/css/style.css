@@ -292,8 +292,8 @@ th {
   height: 5em;
   border-bottom: black;
   border-bottom-style: solid;
-  background-color: #333333;
-  color: #cfcfcf;
+  background-color: #6ee1f4;
+  color: #1d124d;
 }
 
 tr {
@@ -301,9 +301,7 @@ tr {
   text-align: center;
 }
 
-tr:nth-child(odd) {background: #CCC;}
-
-tr:nth-child(even) {background: #EFEFEF;}
+tr:nth-child(even) {background: #b4f1f9;}
 
 td {
   text-align: center;
