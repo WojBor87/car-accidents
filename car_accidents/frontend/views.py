@@ -29,9 +29,9 @@ from .models import (
 
 
 # Create your views here.
-def filters_form(request):
+def home(request):
     db_name = connection.settings_dict['NAME']
-    return render(request, 'frontend/filters_form.html', {'db_name': db_name})
+    return render(request, 'frontend/home.html', {'db_name': db_name})
 
 
 class ImportCsvView(View):
@@ -259,17 +259,6 @@ class ImportCsvView(View):
                 accident_field.pedestrian_behavior = PedestrianBehavior_obj
                 accident_field.notes = Notes_obj
                 accident_field.save()
-
-
-class AccidentView(ListView):
-
-    model = Accident
-    template_name = "frontend/accident_view.html"
-    paginate_by = 50
-
-    def get_context_data(self, **kwargs):
-        context = super(AccidentView, self).get_context_data(**kwargs)
-        return context
 
 
 def filter_search(request):
