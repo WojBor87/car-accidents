@@ -183,9 +183,20 @@
       {% endif %}
     </span>
   </div>
+
+  <hr>
+  <div>
+    <h4>Sample maps:</h4>
+    <ul>
+      <li><a href="{% url 'frontend:fatal-map' %}">fatal accident map</a></li>
+      <li><a href="{% url 'frontend:all-accident-map' %}">all accident map</a></li>
+    </ul>
+  </div>
+  <hr>
+
   <table>
     <thead>
-      <tr align="center">
+      <tr>
         <th>IDKSIP</th>
         <th>Date</th>
         <th>Town</th>
