@@ -169,8 +169,12 @@
   <div class="pagination">
     <span font>
       {% if dataqs.has_previous %}
-      <button class="btn btn-secondary"><a href="?{% query_transform request page=1 %}">&laquo; first</a></button>
-      <button class="btn btn-secondary"><a href="?{% query_transform request page=dataqs.previous_page_number %}">previous</a></button>
+      <button class="btn btn-light">
+        <a href="?{% query_transform request page=1 %}">&laquo; first</a>
+      </button>
+      <button class="btn btn-light">
+        <a href="?{% query_transform request page=dataqs.previous_page_number %}">previous</a>
+      </button>
       {% endif %}
 
       <span class="current">
@@ -178,8 +182,12 @@
       </span>
 
       {% if dataqs.has_next %}
-      <button class="btn btn-secondary"><a href="?{% query_transform request page=dataqs.next_page_number %}">next</a></button>
-      <button class="btn btn-secondary"><a href="?{% query_transform request page=dataqs.paginator.num_pages %}">last &raquo;</a></button>
+      <button class="btn btn-light">
+        <a href="?{% query_transform request page=dataqs.next_page_number %}">next</a>
+      </button>
+      <button class="btn btn-light">
+        <a href="?{% query_transform request page=dataqs.paginator.num_pages %}">last &raquo;</a>
+      </button>
       {% endif %}
     </span>
   </div>
