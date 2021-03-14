@@ -1,5 +1,6 @@
+import folium as folium
 from django.shortcuts import render
-from django.views.generic import View, ListView
+from django.views.generic import View, ListView, TemplateView
 from django.db import connection
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -46,7 +47,7 @@ class ImportCsvView(View):
         return render(request, 'frontend/import_csv.html', {'updated_and_created_rows': self.updated_and_created_rows})
 
     def printProgressBar(
-        self, iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"
+            self, iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"
     ):
         """
         Call in a loop to create terminal progress bar
@@ -63,7 +64,7 @@ class ImportCsvView(View):
         percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
         filledLength = int(length * iteration // total)
         bar = fill * filledLength + '-' * (length - filledLength)
-        print(f'\r{120*" "}\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
+        print(f'\r{120 * " "}\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
         # Print New Line on Complete
         if iteration == total:
             print(flush=True)
@@ -256,7 +257,6 @@ class ImportCsvView(View):
 
 
 class AccidentView(ListView):
-
     model = Accident
     template_name = "frontend/accident_view.html"
     paginate_by = 50
@@ -287,3 +287,30 @@ def filter_search(request):
             'dataqs': dataqs,
         },
     )
+
+
+data = pd.read_csv("/home/michalm/PycharmProjects/car-accidents/car_accidents/frontend/static/frontend/csv/all.csv")
+
+
+class FatalAccidentMapView(TemplateView):
+    template_name = "frontend/map.html"
+
+    def get_context_data(self, **kwargs):
+        figure = folium.Figure()
+        m = folium.Map(location=[52.272185, 21.007728], zoom_start=12)
+        m.add_ro(figure)
+
+        for lat, long, labels in zip(data.Latitude, data.Longitude, data.num_of_fatalities.astype(str)):
+            if labels != '0':
+                folium.CircleMarker(
+                    (lat, long),
+                    radius=3,
+                    color='red',
+                    fill=True,
+                    popup=labels,
+                    fill_color='darkred',
+                    fill_opacity=0.6).add_to(m)
+        m.add_to(figure)
+        figure.render()
+        return {"map": figure}
+
