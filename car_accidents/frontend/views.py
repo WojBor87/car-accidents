@@ -222,8 +222,14 @@ class ImportCsvView(View):
             self.updated_and_created_rows[if_created] += 1
 
     def insert_or_replace_behavior(self):
+        self.printProgressBar(
+            0, len(self.df), prefix=f'{self.df.count()} items, Progress: ', suffix='processed', length=50
+        )
         for i, *fields in self.df.itertuples():
             fields_dict = dict(zip(self.df.columns, fields))
+            self.printProgressBar(
+                i + 1, len(self.df), prefix=f'{len(self.df)} items, Progress: ', suffix='processed', length=50
+            )
             if Accident.objects.filter(idksip=fields_dict['IDKSIP']):
                 PedestrianBehavior_obj, if_created = PedestrianBehavior.objects.update_or_create(
                     name=fields_dict['pedestrian behavior'],

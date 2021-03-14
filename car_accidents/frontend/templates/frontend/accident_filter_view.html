@@ -1,184 +1,224 @@
-{% extends 'frontend/base.html' %} {% load crispy_forms_tags %} {% load widget_tweaks %}
+{% extends 'frontend/base.html' %} {% load static %} {% load crispy_forms_tags %} {% load widget_tweaks %}
 {% load my_templatetags %} {% block content %}
-<form method="get">
-  <div class="well" style="margin: 2%">
-    <h4 style="margin-top: 0">Filter accidents:</h4>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-3">
-        <h5>Date filters:</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.data_time.label_tag }}
-        {% render_field accident_filter.form.data_time class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.data_time__gte.label_tag }}
-        {% render_field accident_filter.form.data_time__gte class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.data_time__lte.label_tag }}
-        {% render_field accident_filter.form.data_time__lte class="form-control" %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        <h5>Location filters:</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.town_name.label_tag }}
-        {% render_field accident_filter.form.town_name class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.road.label_tag }} {% render_field accident_filter.form.road class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.road_geometry.label_tag }}
-        {% render_field accident_filter.form.road_geometry class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.place_of_the_event.label_tag }}
-        {% render_field accident_filter.form.place_of_the_event class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.is_built_up_area.label_tag }}
-        {% render_field accident_filter.form.is_built_up_area class="form-control" %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        <h5>Behavior filters:</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.driver_behavior.label_tag }}
-        {% render_field accident_filter.form.driver_behavior class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.pedestrian_behavior.label_tag }}
-        {% render_field accident_filter.form.pedestrian_behavior class="form-control" %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        <h5>Environments filters:</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.lighting.label_tag }}
-        {% render_field accident_filter.form.lighting class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.weather_conditions.label_tag }}
-        {% render_field accident_filter.form.weather_conditions class="form-control" %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        <h5>Other filters:</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.type_of_accident.label_tag }}
-        {% render_field accident_filter.form.type_of_accident class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.type_of_injury.label_tag }}
-        {% render_field accident_filter.form.type_of_injury class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.num_of_accidents.label_tag }}
-        {% render_field accident_filter.form.num_of_accidents class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.num_of_fatalities.label_tag }}
-        {% render_field accident_filter.form.num_of_fatalities class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.num_of_injured.label_tag }}
-        {% render_field accident_filter.form.num_of_injured class="form-control" %}
-      </div>
-      <div class="form-group col-sm-4 col-md-2">
-        {{ accident_filter.form.is_offender_intoxicated.label_tag }}
-        {% render_field accident_filter.form.is_offender_intoxicated class="form-control" %}
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Search</button>
-    <button type="reset" class="btn btn-primary">Clear</button>
+<aside class="sidebar">
+  <div class="toggle btn btn-primary">
+    <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+      <span></span>
+    </a>
   </div>
-</form>
+  <div class="side-inner container">
+    <nav id="sidebar">
+      <form method="get">
+        <div class="p-4">
+          <h5>Filter accidents:</h5>
+          <ul class="list-unstyled components mb-5">
+            <li>
+              <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false"
+                class="dropdown-toggle collapsed">Date filters:</a>
+              <ul class="list-unstyled collapse" id="pageSubmenu1" style="">
+                <li>
+                  {{ accident_filter.form.data_time.label_tag }}
+                  {% render_field accident_filter.form.data_time class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.data_time__gte.label_tag }}
+                  {% render_field accident_filter.form.data_time__gte class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.data_time__lte.label_tag }}
+                  {% render_field accident_filter.form.data_time__lte class="form-control" %}
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false"
+                class="dropdown-toggle collapsed">Location filters:</a>
+              <ul class="list-unstyled collapse" id="pageSubmenu2" style="">
+                <li>
+                  {{ accident_filter.form.town_name.label_tag }}
+                  {% render_field accident_filter.form.town_name class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.road.label_tag }}
+                  {% render_field accident_filter.form.road class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.road_geometry.label_tag }}
+                  {% render_field accident_filter.form.road_geometry class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.place_of_the_event.label_tag }}
+                  {% render_field accident_filter.form.place_of_the_event class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.is_built_up_area.label_tag }}
+                  {% render_field accident_filter.form.is_built_up_area class="form-control" %}
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false"
+                class="dropdown-toggle collapsed">Behavior filters:</a>
+              <ul class="list-unstyled collapse" id="pageSubmenu3" style="">
+                <li>
+                  {{ accident_filter.form.driver_behavior.label_tag }}
+                  {% render_field accident_filter.form.driver_behavior class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.pedestrian_behavior.label_tag }}
+                  {% render_field accident_filter.form.pedestrian_behavior class="form-control" %}
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#pageSubmenu4" data-toggle="collapse" aria-expanded="false"
+                class="dropdown-toggle collapsed">Environments filters:</a>
+              <ul class="list-unstyled collapse" id="pageSubmenu4" style="">
+                <li>
+                  {{ accident_filter.form.lighting.label_tag }}
+                  {% render_field accident_filter.form.lighting class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.weather_conditions.label_tag }}
+                  {% render_field accident_filter.form.weather_conditions class="form-control" %}
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false"
+                class="dropdown-toggle collapsed">Date
+                filters:</a>
+              <ul class="list-unstyled collapse" id="pageSubmenu5" style="">
+                <li>
+                  {{ accident_filter.form.type_of_accident.label_tag }}
+                  {% render_field accident_filter.form.type_of_accident class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.type_of_injury.label_tag }}
+                  {% render_field accident_filter.form.type_of_injury class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.num_of_accidents.label_tag }}
+                  {% render_field accident_filter.form.num_of_accidents class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.num_of_fatalities.label_tag }}
+                  {% render_field accident_filter.form.num_of_fatalities class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.num_of_injured.label_tag }}
+                  {% render_field accident_filter.form.num_of_injured class="form-control" %}
+                </li>
+                <li>
+                  {{ accident_filter.form.is_offender_intoxicated.label_tag }}
+                  {% render_field accident_filter.form.is_offender_intoxicated class="form-control" %}
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <button type="submit" class="btn btn-primary">Search</button>
+          <button type="reset" class="btn btn-secondary">Clear</button>
+        </div>
+    </nav>
+    <div class="row">
+      <div class="profile col-sm">
+        <img src="{% static 'frontend/images/profile_michal_malek.jpg' %}" alt="Image" class="img-fluid">
+        <h3 class="name">Michał Małek</h3>
+        <span class="country">XXXXXXXX, PL</span>
+      </div>
+      <div class="profile col-sm">
+        <img src="{% static 'frontend/images/profile_krzysztof_grabowski.jpg' %}" alt="Image" class="img-fluid">
+        <h3 class="name">Krzysztof Grabowski</h3>
+        <span class="country">Częstochowa, PL</span>
+      </div>
+      <div class="profile col-sm">
+        <img src="{% static 'frontend/images/profile_wojtek_borawski.jpg' %}" alt="Image" class="img-fluid">
+        <h3 class="name">Wojciech Borawski</h3>
+        <span class="country">XXXXXXXX, PL</span>
+      </div>
+    </div>
+  </div>
 
-<table class="table table-bordered" style="font-size: 0.8em">
-  <thead>
-    <tr align="center">
-      <th>IDKSIP</th>
-      <th width="100em">Date</th>
-      <th>Town</th>
-      <th>Road</th>
-      <th>Road geometry</th>
-      <th>Place of the event</th>
-      <th width="80em">is built-up area?</th>
-      <th>Driver behavior</th>
-      <th>Pedestrian behavior</th>
-      <th>Lighting</th>
-      <th>Weather conditions</th>
-      <th>Type of accident</th>
-      <th>Type of injury</th>
-      <th>Number of accidents</th>
-      <th>Number of fatalities</th>
-      <th>Number of injured</th>
-      <th>is offender intoxicated?</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for accident in dataqs.object_list %}
-    <tr>
-      <td align="center">{{ accident.idksip }}</td>
-      <td align="center">{{ accident.data_time.date }}<br />{{ accident.data_time.time }}</td>
-      <td align="center">{{ accident.town_name }}</td>
-      <td align="center">{{ accident.road }}</td>
-      <td align="center">{{ accident.road_geometry }}</td>
-      <td align="center">{{ accident.place_of_the_event }}</td>
-      <td align="center">{{ accident.is_built_up_area }}</td>
-      <td align="center">{{ accident.driver_behavior }}</td>
-      <td align="center">{{ accident.pedestrian_behavior }}</td>
-      <td align="center">{{ accident.lighting }}</td>
-      <td align="center">{{ accident.weather_conditions }}</td>
-      <td align="center">{{ accident.type_of_accident }}</td>
-      <td align="center">{{ accident.type_of_injury }}</td>
-      <td align="center">{{ accident.num_of_accidents }}</td>
-      <td align="center">{{ accident.num_of_fatalities }}</td>
-      <td align="center">{{ accident.num_of_injured }}</td>
-      <td align="center">{{ accident.is_offender_intoxicated }}</td>
-    </tr>
-    {% empty %}
-    <tr>
-      <td colspan="5">No data</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<div class="pagination">
-  <span>
-    {% if dataqs.has_previous %}
-    <a href="?{% query_transform request page=1 %}">&laquo; first</a>
-    <a href="?{% query_transform request page=dataqs.previous_page_number %}">previous</a>
+</aside>
+
+<main>
+  <div class="auth-link">
+    {% if user.is_authenticated %}
+    Witam {{ user.username }} <br>
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
     {% endif %}
+  </div>
 
-    <span class="current">
-      Page {{ dataqs.number }} of {{ dataqs.paginator.num_pages }}.
+  <hr>
+  <div class="pagination">
+    <span>
+      {% if dataqs.has_previous %}
+      <a href="?{% query_transform request page=1 %}">&laquo; first</a>
+      <a href="?{% query_transform request page=dataqs.previous_page_number %}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ dataqs.number }} of {{ dataqs.paginator.num_pages }}.
+      </span>
+
+      {% if dataqs.has_next %}
+      <a href="?{% query_transform request page=dataqs.next_page_number %}">next</a>
+      <a href="?{% query_transform request page=dataqs.paginator.num_pages %}">last &raquo;</a>
+      {% endif %}
     </span>
+  </div>
+  <table class="table table-bordered" style="font-size: 0.8em">
+    <thead>
+      <tr align="center">
+        <th>IDKSIP</th>
+        <th width="100em">Date</th>
+        <th>Town</th>
+        <th>Road</th>
+        <th>Road geometry</th>
+        <th>Place of the event</th>
+        <th width="80em">is built-up area?</th>
+        <th>Driver behavior</th>
+        <th>Pedestrian behavior</th>
+        <th>Lighting</th>
+        <th>Weather conditions</th>
+        <th>Type of accident</th>
+        <th>Type of injury</th>
+        <th>Number of accidents</th>
+        <th>Number of fatalities</th>
+        <th>Number of injured</th>
+        <th>is offender intoxicated?</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for accident in dataqs.object_list %}
+      <tr>
+        <td align="center">{{ accident.idksip }}</td>
+        <td align="center">{{ accident.data_time.date }}<br />{{ accident.data_time.time }}</td>
+        <td align="center">{{ accident.town_name }}</td>
+        <td align="center">{{ accident.road }}</td>
+        <td align="center">{{ accident.road_geometry }}</td>
+        <td align="center">{{ accident.place_of_the_event }}</td>
+        <td align="center">{{ accident.is_built_up_area }}</td>
+        <td align="center">{{ accident.driver_behavior }}</td>
+        <td align="center">{{ accident.pedestrian_behavior }}</td>
+        <td align="center">{{ accident.lighting }}</td>
+        <td align="center">{{ accident.weather_conditions }}</td>
+        <td align="center">{{ accident.type_of_accident }}</td>
+        <td align="center">{{ accident.type_of_injury }}</td>
+        <td align="center">{{ accident.num_of_accidents }}</td>
+        <td align="center">{{ accident.num_of_fatalities }}</td>
+        <td align="center">{{ accident.num_of_injured }}</td>
+        <td align="center">{{ accident.is_offender_intoxicated }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">No data</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-    {% if dataqs.has_next %}
-    <a href="?{% query_transform request page=dataqs.next_page_number %}">next</a>
-    <a href="?{% query_transform request page=dataqs.paginator.num_pages %}">last &raquo;</a>
-    {% endif %}
-  </span>
-</div>
+</main>
 {% endblock content %}
