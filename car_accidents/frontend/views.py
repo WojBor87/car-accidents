@@ -28,11 +28,6 @@ from .models import (
 
 
 # Create your views here.
-def home(request):
-    db_name = connection.settings_dict['NAME']
-    return render(request, 'frontend/home.html', {'db_name': db_name})
-
-
 class ImportCsvView(View):
     def get(self, request, file_name):
         pd.set_option('display.max_columns', None)
