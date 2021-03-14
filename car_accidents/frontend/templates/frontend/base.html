@@ -5,34 +5,30 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Home</title>
-    {% include 'frontend/favicons.html' %}
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}" />
-  </head>
-  <body>
 
-    {% if user.is_authenticated %}
-      Witam {{ user.username }} <br>
-      <a href="{% url 'login' %}">Login</a>
-    {% else %}
-      <a href="{% url 'logout' %}">Logout</a>
-    {% endif %}
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>{% block site_title %}Home{% endblock site_title %}</title>
+  {% include 'frontend/favicons.html' %}
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}" />
+</head>
 
-    <hr>
-    <!--[if lt IE 7]>
+<body>
+
+
+  <!--[if lt IE 7]>
       <p class="browsehappy">
         You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your
         experience.
       </p>
     <![endif]-->
-    {% block content %}{% endblock content %}
-    <script src="{% static 'frontend/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'frontend/js/scripts.js' %}" async defer></script>
-  </body>
+  {% block content %}{% endblock content %}
+  {% bootstrap_javascript jquery='full' %}
+  <script src="{% static 'frontend/js/scripts.js' %}" async defer></script>
+</body>
+
 </html>
