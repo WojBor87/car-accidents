@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Accident
 
+
 @admin.register(Accident)
 class AccidentAdmin(admin.ModelAdmin):
     list_display = ["idksip", "data_time", "town_name", "road"]

@@ -1,6 +1,6 @@
 import folium as folium
 from django.shortcuts import render
-from django.views.generic import View, ListView, TemplateView
+from django.views.generic import View, TemplateView
 from django.db import connection
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import (
     RoadCategory,
     Road,
-    Voivodeship,
     District,
     Town,
     RoadGeometry,
@@ -30,11 +29,6 @@ from .models import (
 
 
 # Create your views here.
-def filters_form(request):
-    db_name = connection.settings_dict['NAME']
-    return render(request, 'frontend/filters_form.html', {'db_name': db_name})
-
-
 class ImportCsvView(View):
     def get(self, request, file_name):
         pd.set_option('display.max_columns', None)
@@ -223,8 +217,14 @@ class ImportCsvView(View):
             self.updated_and_created_rows[if_created] += 1
 
     def insert_or_replace_behavior(self):
+        self.printProgressBar(
+            0, len(self.df), prefix=f'{self.df.count()} items, Progress: ', suffix='processed', length=50
+        )
         for i, *fields in self.df.itertuples():
             fields_dict = dict(zip(self.df.columns, fields))
+            self.printProgressBar(
+                i + 1, len(self.df), prefix=f'{len(self.df)} items, Progress: ', suffix='processed', length=50
+            )
             if Accident.objects.filter(idksip=fields_dict['IDKSIP']):
                 PedestrianBehavior_obj, if_created = PedestrianBehavior.objects.update_or_create(
                     name=fields_dict['pedestrian behavior'],
@@ -254,16 +254,6 @@ class ImportCsvView(View):
                 accident_field.pedestrian_behavior = PedestrianBehavior_obj
                 accident_field.notes = Notes_obj
                 accident_field.save()
-
-
-class AccidentView(ListView):
-    model = Accident
-    template_name = "frontend/accident_view.html"
-    paginate_by = 50
-
-    def get_context_data(self, **kwargs):
-        context = super(AccidentView, self).get_context_data(**kwargs)
-        return context
 
 
 def filter_search(request):
