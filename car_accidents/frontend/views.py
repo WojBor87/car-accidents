@@ -5,6 +5,9 @@ from django.db import connection
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+
+from folium import plugins
+
 from .filters import AccidentFilter
 import pandas as pd
 import numpy as np
@@ -279,28 +282,53 @@ def filter_search(request):
     )
 
 
-data = pd.read_csv("/home/michalm/PycharmProjects/car-accidents/car_accidents/frontend/static/frontend/csv/all.csv")
+data = pd.read_csv("frontend/static/frontend/csv/all.csv")
 
 
-class FatalAccidentMapView(TemplateView):
-    template_name = "frontend/map.html"
+def show_map(request):
+    m = folium.Map(location=[52.272185, 21.007728], zoom_start=8)
+    test = folium.Html('<b>Hello world</b>', script=True)
 
-    def get_context_data(self, **kwargs):
-        figure = folium.Figure()
-        m = folium.Map(location=[52.272185, 21.007728], zoom_start=12)
-        m.add_ro(figure)
+    for lat, long, labels in zip(data.Latitude, data.Longitude, data.num_of_fatalities.astype(str)):
+        if labels != '0':
+            folium.CircleMarker(
+                (lat, long),
+                radius=3,
+                color='red',
+                fill=True,
+                popup=labels,
+                fill_color='darkred',
+                fill_opacity=0.6).add_to(m)
+    m = m._repr_html_()
+    context = {'my_map': m}
+    return render(request, 'frontend/show_folium_map.html', context)
 
-        for lat, long, labels in zip(data.Latitude, data.Longitude, data.num_of_fatalities.astype(str)):
-            if labels != '0':
-                folium.CircleMarker(
-                    (lat, long),
-                    radius=3,
-                    color='red',
-                    fill=True,
-                    popup=labels,
-                    fill_color='darkred',
-                    fill_opacity=0.6).add_to(m)
-        m.add_to(figure)
-        figure.render()
-        return {"map": figure}
+
+def show_fatalities_map(request):
+    m = folium.Map(location=[52.272185, 21.007728], zoom_start=8)
+    test = folium.Html('<b>Hello world</b>', script=True)
+    accidents = plugins.MarkerCluster().add_to(m)
+
+    for lat, long, labels, commune, id, date in zip(
+            data.Latitude,
+            data.Longitude,
+            data.num_of_injured.astype(str),
+            data.district_commune.astype(str),
+            data.IDKSIP.astype(str),
+            data.date.astype(str)
+    ):
+        if labels != '0':
+            folium.Marker(
+                location=[lat, long],
+                icon=None,
+                color='red',
+                popup=[
+                    labels,
+                    commune,
+                    id,
+                    date
+                ]).add_to(accidents)
+    m = m._repr_html_()
+    context = {'my_map': m}
+    return render(request, 'frontend/fatalities_map.html', context)
 
