@@ -130,5 +130,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'accident_view/'
+LOGIN_REDIRECT_URL = 'accident_filter_view/'
 LOGOUT_REDIRECT_URL = 'login'
