@@ -167,37 +167,38 @@
 
   <hr>
   <div class="pagination">
-    <span font>
-      {% if dataqs.has_previous %}
-      <button class="btn btn-light">
-        <a href="?{% query_transform request page=1 %}">&laquo; first</a>
-      </button>
-      <button class="btn btn-light">
-        <a href="?{% query_transform request page=dataqs.previous_page_number %}">previous</a>
-      </button>
-      {% endif %}
-
-      <span class="current">
-        Page {{ dataqs.number }} of {{ dataqs.paginator.num_pages }}.
-      </span>
-
-      {% if dataqs.has_next %}
-      <button class="btn btn-light">
-        <a href="?{% query_transform request page=dataqs.next_page_number %}">next</a>
-      </button>
-      <button class="btn btn-light">
-        <a href="?{% query_transform request page=dataqs.paginator.num_pages %}">last &raquo;</a>
-      </button>
-      {% endif %}
-    </span>
+    <ul class="pagination">
+    {% if dataqs.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?{% query_transform request page=1 %}">&laquo; first</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?{% query_transform request page=dataqs.previous_page_number %}">previous</a>
+      </li>
+    {% endif %}
+      <li class="page-item active">
+        <a class="page-link" href="#">Page {{ dataqs.number }} of {{ dataqs.paginator.num_pages }}.</a>
+      </li>
+    {% if dataqs.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?{% query_transform request page=dataqs.next_page_number %}">next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?{% query_transform request page=dataqs.paginator.num_pages %}">last &raquo;</a>
+      </li>
+    {% endif %}
   </div>
 
   <hr>
   <div>
-    <h4>Sample maps:</h4>
-    <ul>
-      <li><a href="{% url 'frontend:fatal-map' %}">fatal accident map</a></li>
-      <li><a href="{% url 'frontend:all-accident-map' %}">all accident map</a></li>
+    <h4 align="center">Sample maps:</h4>
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link active" href=""{% url 'frontend:fatal-map' %}">fatal accident map</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'frontend:all-accident-map' %}">all accident map</a>
+      </li>
     </ul>
   </div>
   <hr>
