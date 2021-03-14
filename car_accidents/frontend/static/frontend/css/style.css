@@ -4,6 +4,24 @@ body {
   background-color: #fcfcfc;
 }
 
+#accident_header {
+  background-image: url("../images/header.gif");
+  background-size: 100% ;
+  object-fit: scale-down;
+  height: 450px;
+}
+
+#paginate {
+  alignment: bottom;
+  margin: 5em;
+}
+
+#sample {
+  alignment: left;
+  margin: 2em;
+  height: 200px;
+}
+
 p {
   color: #b3b3b3;
   font-weight: 300;
