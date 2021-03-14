@@ -279,3 +279,34 @@ main .post-content .post-meta {
 .burger:focus {
   outline: none;
 }
+
+table {
+  width: 100%;
+  font-size: 0.75em;
+}
+
+th {
+  height: 5em;
+  border-bottom: black;
+  border-bottom-style: solid;
+  background-color: #333333;
+  color: #cfcfcf;
+}
+
+tr {
+  min-height: 50px;
+  text-align: center;
+}
+
+tr:nth-child(odd) {background: #CCC;}
+
+tr:nth-child(even) {background: #EFEFEF;}
+
+td {
+  text-align: center;
+}
+
+#date{
+  width: 120px;
+}
+
