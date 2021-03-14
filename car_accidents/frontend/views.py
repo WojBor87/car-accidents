@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import View, ListView
+from django.views.generic import View
 from django.db import connection
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import (
     RoadCategory,
     Road,
-    Voivodeship,
     District,
     Town,
     RoadGeometry,
