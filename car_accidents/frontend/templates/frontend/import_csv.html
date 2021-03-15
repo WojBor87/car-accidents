@@ -1,0 +1,8 @@
+{% extends 'frontend/base.html' %} {% load crispy_forms_tags %} {% block content %}
+<h1>Changes made to the database:</h1>
+<ul>
+  {% for table in table_changes %}
+  <li>{{table}}</li>
+  {% endfor %}
+</ul>
+{% endblock content %}

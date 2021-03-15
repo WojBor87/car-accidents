@@ -1,6 +1,8 @@
 # Temp folder
 tmp/*
 
+# CSVs to import
+**/csv/*
 # Bootstrap files in frontend/css/ and frontend/js/ folders#
 bootstrap*.*
 
@@ -125,3 +127,4 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+frontend/migrations/*
